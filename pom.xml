@@ -39,5 +39,24 @@
 		    <artifactId>jaxrs-api</artifactId>
 		    <version>3.0.12.Final</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-client</artifactId>
+		    <version>4.5.4.Final</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-multipart-provider</artifactId>
+		    <version>4.5.4.Final</version>
+		</dependency>
+
+		<dependency>
+		    <groupId>org.jboss.resteasy</groupId>
+		    <artifactId>resteasy-servlet-initializer</artifactId>
+		    <version>4.5.4.Final</version>
+		</dependency>
+				
+				
+		
 	</dependencies>
 </project>

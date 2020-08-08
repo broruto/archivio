@@ -7,9 +7,9 @@ import org.apache.ibatis.annotations.*;
 import model.ModelDocumenti;
 
 public interface DocumentiMapper {
-	final String getAll = "SELECT * FROM documenti"; 
+	final String getAll = "SELECT ID_DOCUMENTO,NOME_DOCUMENTO FROM documenti"; 
 	final String getById = "SELECT * FROM documenti WHERE ID_DOCUMENTO = #{id}"; 
-	final String insert = "INSERT INTO documenti (NOME_DOCUMENTO, DOCUMENTO) VALUES (#{nome}, #{documento})";
+	final String delById = "DELETE FROM `documenti` WHERE `ID_DOCUMENTO` = #{id}"; 
 	   
 	@Select(getAll)
 	   @Results(value = {
@@ -17,10 +17,6 @@ public interface DocumentiMapper {
 	      @Result(property = "nome", column = "NOME_DOCUMENTO")
 	   })
 	List<ModelDocumenti> getAll();
-	
-	@Insert(insert)
-	   @Options(useGeneratedKeys = true, keyProperty = "id")
-	   void insert(ModelDocumenti documenti);
 	
 	@Select(getById)
 	   @Results(value = {
@@ -30,4 +26,8 @@ public interface DocumentiMapper {
 	   })
 	@Options(keyProperty = "id")
 	ModelDocumenti getById(int id);
+	
+	@Delete(delById)
+	@Options(keyProperty = "id")
+	int delById(int id);
 }

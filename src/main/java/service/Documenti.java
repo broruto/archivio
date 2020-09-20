@@ -14,12 +14,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.commons.io.IOUtils;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.jboss.resteasy.plugins.providers.multipart.InputPart;
 import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
 
+import common.StatusCode;
 import dao.DocumentiDao;
 import model.ModelDocumenti;
 
@@ -30,8 +32,11 @@ public class Documenti {
 	@Path("/id/{id}")
 	@Produces(MediaType.APPLICATION_OCTET_STREAM)
 	public Response selectById(@PathParam("id") int id) throws IOException {
+		ResponseBuilder res = Response.status(StatusCode.BAD_REQUEST);
 		ModelDocumenti result= DocumentiDao.getInstance().getById(id);
-		return Response.ok(result.getDocumento()).build();
+		res =  Response.ok(result.getDocumento());
+		res.header("Content-Disposition", "attachment; filename=\"" + result.getNome() + "\"");
+		return res.build();
 	}
 	@DELETE
 	@Path("/id/{id}")
@@ -41,7 +46,6 @@ public class Documenti {
 	}
 	
 	@GET
-	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response selectAll() throws IOException {
 		List<ModelDocumenti> result= DocumentiDao.getInstance().getAll();
@@ -62,7 +66,7 @@ public class Documenti {
 			ModelDocumenti documento= new ModelDocumenti();
 			documento.setDocumento(bytes);
 			documento.setNome(fileName);
-			int response = DocumentiDao.getInstance().inserisci(documento);
+			int response = DocumentiDao.getInstance().insert(documento);
 			return Response.ok(response).build();
 		}
 		return Response.ok().build();

@@ -1,5 +1,7 @@
 package service;
 
+import java.io.IOException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import common.StatusCode;
+import controller.ControllerUser;
 import model.ModelUser;
 import utils.StringUtils;
 
@@ -31,8 +34,19 @@ public class User {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registrazione(ModelUser user) {
 		Response res = Response.status(StatusCode.INTERNAL_ERROR).build();
-		if(user != null && StringUtils.isNotEmpty(user.getUsername()) && StringUtils.isNotEmpty(user.getEmail())) {
-			res = Response.status(StatusCode.NOT_IMPLEMENTED).build();
+		if(user != null && StringUtils.isNotEmpty(user.getUsername()) && StringUtils.isNotEmpty(user.getPassword()) && StringUtils.isNotEmpty(user.getEmail())) {
+			try {
+				ControllerUser controller = ControllerUser.getInstance();
+				boolean result = controller.registrazioneUser(user);
+				if(result) {
+					res = Response.ok().build();
+				}else {
+					res = Response.status(StatusCode.BAD_REQUEST).build();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+//			res = Response.status(StatusCode.NOT_IMPLEMENTED).build();
 		}else {
 			res = Response.status(StatusCode.BAD_REQUEST).build();
 		}

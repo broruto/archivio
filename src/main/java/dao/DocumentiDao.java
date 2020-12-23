@@ -23,25 +23,25 @@ public class DocumentiDao extends BasicDao{
 	
 	
 	public List<ModelDocumenti> getAll() throws IOException {
-		DocumentiMapper mapper=sessione();
+		DocumentiMapper mapper=(DocumentiMapper) sessione(DocumentiMapper.class);
 	    List<ModelDocumenti> documenti=mapper.getAll();
 	    return documenti;
 	}
 	
 	public ModelDocumenti getById(int id) throws IOException {
-		DocumentiMapper mapper=sessione();
+		DocumentiMapper mapper=(DocumentiMapper) sessione(DocumentiMapper.class);
 	    ModelDocumenti documenti=mapper.getById(id);
 	    return documenti;
 	}
 	
 	public int delById(int id) throws IOException {
-		DocumentiMapper mapper=sessione();
+		DocumentiMapper mapper=(DocumentiMapper) sessione(DocumentiMapper.class);
 	    int documenti=mapper.delById(id);
 	    return documenti;
 	}
 	
 	public int insert(ModelDocumenti documenti) throws IOException {
-		DocumentiMapper mapper=sessione();
+		DocumentiMapper mapper=(DocumentiMapper) sessione(DocumentiMapper.class);
 	    int result=mapper.insert(documenti);
 	    return result;
 	}

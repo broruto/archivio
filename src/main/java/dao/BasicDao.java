@@ -11,8 +11,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import mapper.DocumentiMapper;
-
 public class BasicDao {
 
 	private static BasicDao basicDao;
@@ -38,12 +36,12 @@ public class BasicDao {
         return conn;
 	}
 	
-	protected static DocumentiMapper sessione() throws IOException {
+	protected static <T> Object sessione(Class<T> mapperClass) throws IOException {
 		Reader reader = Resources.getResourceAsReader("dao/config/SqlMapConfig.xml");
 	    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);		
 	    SqlSession session = sqlSessionFactory.openSession();
-	    session.getConfiguration().addMapper(DocumentiMapper.class);
-	    DocumentiMapper mapper = session.getMapper(DocumentiMapper.class);
+	    session.getConfiguration().addMapper(mapperClass);
+	    Object mapper = session.getMapper(mapperClass);
 	    return mapper;
 	}
 }

@@ -1,0 +1,33 @@
+openapi: 3.0.0
+info:
+  title: OpenAPI per il caricamento dei dati utente
+  description: 'Comments : '
+  version: '1.0 (2020-10-13)'
+servers:
+  - url: http://localhost:8080/server-1.0.0/jaxrs/user
+    description: Local Development server
+paths:
+  /user/info/:
+    get:
+      summary: Caricamento info utente
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+components:
+  schemas:
+    User:
+      properties:
+        id: 
+          type: string
+          example: ''
+        username: 
+          type: string
+          example: ''
+        email: 
+          type: string
+          example: ''
